@@ -7,7 +7,6 @@
 					<v-list-item
 						v-for="menuItem in menuItems"
 						:key="menuItem.text"
-						router
 						:to="menuItem.link"
 					>
 						<v-list-item-icon>
@@ -35,7 +34,6 @@
 					depressed
 					v-for="menuItem in menuItems"
 					:key="menuItem.text"
-					router
 					:to="menuItem.link"
 				>
 					<v-icon left dark>{{ menuItem.icon }}</v-icon>

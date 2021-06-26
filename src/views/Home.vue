@@ -12,11 +12,12 @@
 		</v-row>
 		<v-row align="center" justify="space-around">
 			<v-col class="text-center">
-				<v-carousel>
+				<v-carousel cycle style="cursor:pointer;">
 					<v-carousel-item
 						v-for="meetup in meetups"
 						:key="meetup.id"
 						:src="meetup.imageURL"
+						@click="onLoadMeetup(meetup.id)"
 					>
 						<div class="title">
 							{{ meetup.title }}
@@ -79,12 +80,18 @@ export default {
 				},
 				{
 					imageURL:
-						'https://upload.wikimedia.org/wikipedia/en/b/b2/Nairobi_uhuru_park.JPG',
+						'https://upload.wikimedia.org/wikipedia/commons/a/ae/Nairobi_skyline_P1000021.jpg',
 					id: 'nairobi-b',
 					title: 'Meetup in Downtown Nairobi',
 				},
 			],
 		};
+	},
+
+	methods: {
+		onLoadMeetup(id) {
+			this.$router.push('/meetups/' + id);
+		},
 	},
 };
 </script>

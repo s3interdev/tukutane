@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import Home from '@/views/Home';
 import MeetupsExplore from '@/views/meetups/MeetupsExplore';
 import MeetupsOrganize from '@/views/meetups/MeetupsOrganize';
+import MeetupsSingle from '@/views/meetups/MeetupsSingle';
 import UserProfile from '@/views/user/UserProfile';
 import UserSignUp from '@/views/user/UserSignUp';
 import UserSignIn from '@/views/user/UserSignIn';
@@ -33,6 +34,14 @@ const routes = [
 		component: MeetupsOrganize,
 		meta: {
 			title: 'Organize a Meetup',
+		},
+	},
+	{
+		path: '/meetups/:id',
+		name: 'MeetupsSingle,',
+		component: MeetupsSingle,
+		meta: {
+			title: 'Meetup',
 		},
 	},
 	{
