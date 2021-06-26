@@ -12,7 +12,7 @@
 		</v-row>
 		<v-row align="center" justify="space-around">
 			<v-col class="text-center">
-				<v-carousel cycle style="cursor:pointer;">
+				<v-carousel cycle hide-delimiters style="cursor:pointer;">
 					<v-carousel-item
 						v-for="meetup in meetups"
 						:key="meetup.id"
@@ -41,56 +41,15 @@
 export default {
 	name: 'Home',
 
-	data() {
-		return {
-			meetups: [
-				{
-					imageURL:
-						'https://upload.wikimedia.org/wikipedia/commons/e/ec/Aerial_View_of_Sea_Point%2C_Cape_Town_South_Africa.jpg',
-					id: 'cape-town',
-					title: 'Meetup in Cape Town',
-				},
-				{
-					imageURL:
-						'https://www.proudtanzaniasafaris.com/wp-content/uploads/2019/07/DarEsSalaam.jpg',
-					id: 'dar-es-salaam',
-					title: 'Meetup in Dar-es-Salaam',
-				},
-				{
-					imageURL:
-						'https://cdn.pixabay.com/photo/2017/06/06/03/35/kampala-2376011_1280.jpg',
-					id: 'kampala',
-					title: 'Meetup in Kampala',
-				},
-				{
-					imageURL: 'https://live.staticflickr.com/65535/50409058181_e508db66fb_b.jpg',
-					id: 'lagos',
-					title: 'Meetup in Lagos',
-				},
-				{
-					imageURL:
-						'https://cdn.pixabay.com/photo/2014/02/21/22/33/old-port-271664_1280.jpg',
-					id: 'mombasa',
-					title: 'Meetup in Mombasa',
-				},
-				{
-					imageURL: 'https://live.staticflickr.com/8794/16703357583_45fe283970_b.jpg',
-					id: 'nairobi-a',
-					title: 'Meetup in Nairobi',
-				},
-				{
-					imageURL:
-						'https://upload.wikimedia.org/wikipedia/commons/a/ae/Nairobi_skyline_P1000021.jpg',
-					id: 'nairobi-b',
-					title: 'Meetup in Downtown Nairobi',
-				},
-			],
-		};
-	},
-
 	methods: {
 		onLoadMeetup(id) {
 			this.$router.push('/meetups/' + id);
+		},
+	},
+
+	computed: {
+		meetups() {
+			return this.$store.getters.featuredMeetups;
 		},
 	},
 };

@@ -40,6 +40,7 @@ const routes = [
 		path: '/meetups/:id',
 		name: 'MeetupsSingle,',
 		component: MeetupsSingle,
+		props: true,
 		meta: {
 			title: 'Meetup',
 		},
