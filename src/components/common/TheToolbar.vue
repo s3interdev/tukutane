@@ -20,27 +20,28 @@
 		</v-navigation-drawer>
 		<v-app-bar color="primary" dark app>
 			<v-app-bar-nav-icon
-				class="d-sm-none"
+				class="d-md-none"
 				@click="drawer = !drawer"
 			></v-app-bar-nav-icon>
 			<v-toolbar-title class="text-h5">
 				<router-link to="/" custom v-slot="{ navigate }" style="cursor: pointer">
-					<span @click="navigate" role="link">Tukutane</span>
+					<span @click="navigate" @keypress.enter="navigate" role="link">Tukutane</span>
 				</router-link>
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
-			<v-btn
-				class="d-none d-sm-block"
-				depressed
-				color="primary"
-				v-for="menuItem in menuItems"
-				:key="menuItem.text"
-				router
-				:to="menuItem.link"
-			>
-				<v-icon left>{{ menuItem.icon }}</v-icon>
-				{{ menuItem.text }}
-			</v-btn>
+			<v-toolbar-items class="d-none d-md-block">
+				<v-btn
+					color="primary"
+					depressed
+					v-for="menuItem in menuItems"
+					:key="menuItem.text"
+					router
+					:to="menuItem.link"
+				>
+					<v-icon left>{{ menuItem.icon }}</v-icon>
+					{{ menuItem.text }}
+				</v-btn>
+			</v-toolbar-items>
 		</v-app-bar>
 	</div>
 </template>
