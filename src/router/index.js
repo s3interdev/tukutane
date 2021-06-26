@@ -2,8 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import Home from '@/views/Home';
-import ViewAllMeetups from '@/views/meetup/ViewAllMeetups';
-import CreateMeetup from '@/views/meetup/CreateMeetup';
+import MeetupsExplore from '@/views/meetups/MeetupsExplore';
+import MeetupsOrganize from '@/views/meetups/MeetupsOrganize';
 import UserProfile from '@/views/user/UserProfile';
 import UserSignUp from '@/views/user/UserSignUp';
 import UserSignIn from '@/views/user/UserSignIn';
@@ -21,18 +21,18 @@ const routes = [
 	},
 	{
 		path: '/meetups',
-		name: 'ViewAllMeetups',
-		component: ViewAllMeetups,
+		name: 'MeetupsExplore',
+		component: MeetupsExplore,
 		meta: {
-			title: 'All Meetups',
+			title: 'Explore Meetups',
 		},
 	},
 	{
-		path: '/meetup/create-meetup',
-		name: 'CreateMeetup',
-		component: CreateMeetup,
+		path: '/meetups/organize-meetup',
+		name: 'MeetupsOrganize',
+		component: MeetupsOrganize,
 		meta: {
-			title: 'Create Meetup',
+			title: 'Organize a Meetup',
 		},
 	},
 	{

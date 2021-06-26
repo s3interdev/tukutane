@@ -1,10 +1,10 @@
 <template>
-	<div>View All Meetups</div>
+	<div>Organize a Meetup</div>
 </template>
 
 <script>
 export default {
-	name: 'ViewAllMeetups',
+	name: 'MeetupsOrganize',
 };
 </script>
 

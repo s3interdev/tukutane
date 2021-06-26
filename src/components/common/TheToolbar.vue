@@ -25,7 +25,7 @@
 			></v-app-bar-nav-icon>
 			<v-toolbar-title class="text-h5">
 				<router-link to="/" custom v-slot="{ navigate }" style="cursor: pointer">
-					<span @click="navigate" @keypress.enter="navigate" role="link">Tukutane</span>
+					<span @click="navigate" role="link">Tukutane</span>
 				</router-link>
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
@@ -38,7 +38,7 @@
 					router
 					:to="menuItem.link"
 				>
-					<v-icon left>{{ menuItem.icon }}</v-icon>
+					<v-icon left dark>{{ menuItem.icon }}</v-icon>
 					{{ menuItem.text }}
 				</v-btn>
 			</v-toolbar-items>
@@ -55,11 +55,15 @@ export default {
 			drawer: false,
 			selectedMenuItem: 0,
 			menuItems: [
-				{ text: 'View Meetups', icon: 'mdi-account-group', link: '/meetups' },
-				{ text: 'Organize Meetup', icon: 'mdi-bullhorn', link: '/meetup/create-meetup' },
+				{ text: 'Explore Meetups', icon: 'mdi-account-group', link: '/meetups' },
+				{
+					text: 'Organize Meetup',
+					icon: 'mdi-bullhorn',
+					link: '/meetups/organize-meetup',
+				},
 				{ text: 'View Profile', icon: 'mdi-account', link: '/profile' },
 				{ text: 'Sign Up', icon: 'mdi-clipboard-edit', link: '/sign-up' },
-				{ text: 'Sign Out', icon: 'mdi-logout', link: '/sign-in' },
+				{ text: 'Sign In', icon: 'mdi-lock-open', link: '/sign-in' },
 			],
 		};
 	},

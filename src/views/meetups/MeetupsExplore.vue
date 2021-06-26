@@ -1,10 +1,10 @@
 <template>
-	<div>Create New Meetup</div>
+	<div>Explore Meetups</div>
 </template>
 
 <script>
 export default {
-	name: 'CreateMeetup',
+	name: 'MeetupsExplore',
 };
 </script>
 

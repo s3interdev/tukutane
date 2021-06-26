@@ -2,9 +2,7 @@
 	<v-app>
 		<TheToolbar />
 		<v-main>
-			<v-container>
-				<router-view></router-view>
-			</v-container>
+			<router-view></router-view>
 		</v-main>
 	</v-app>
 </template>
