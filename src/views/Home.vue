@@ -5,7 +5,7 @@
 				<v-btn color="info" large router to="/meetups">Explore Meetups</v-btn>
 			</v-col>
 			<v-col class="text-center">
-				<v-btn color="secondary" large router to="/meetups/organize-meetup">
+				<v-btn color="accent" large router to="/meetups/organize-meetup">
 					Organize Meetup
 				</v-btn>
 			</v-col>
