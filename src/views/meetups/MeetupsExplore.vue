@@ -10,7 +10,7 @@
 						:src="meetup.imageURL"
 					>
 						<v-card-title>{{ meetup.title }}</v-card-title>
-						<v-card-subtitle>{{ meetup.date }}</v-card-subtitle>
+						<v-card-subtitle>{{ meetup.date | date }}</v-card-subtitle>
 					</v-img>
 					<v-card-actions>
 						<v-spacer></v-spacer>
