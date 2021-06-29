@@ -1,7 +1,7 @@
 <template>
 	<v-container>
-		<v-row>
-			<v-col v-for="meetup in meetups" :key="meetup.id">
+		<v-row justify="center">
+			<v-col cols="12" sm="10" md="8" lg="6" v-for="meetup in meetups" :key="meetup.id">
 				<v-card>
 					<v-img
 						class="white--text align-end"

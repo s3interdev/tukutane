@@ -11,10 +11,9 @@
 								<v-text-field
 									ref="title"
 									v-model="title"
-									:rules="[() => !!title || 'This is a required field.']"
+									:rules="requiredFieldRule"
 									:error-messages="errorMessages"
 									label="Meetup Title"
-									placeholder="Meetup title"
 									required
 									prepend-icon="mdi-clipboard-list"
 								></v-text-field>
@@ -25,10 +24,9 @@
 								<v-text-field
 									ref="location"
 									v-model="location"
-									:rules="[() => !!location || 'This is a required field.']"
+									:rules="requiredFieldRule"
 									:error-messages="errorMessages"
 									label="Meetup Location"
-									placeholder="Meetup location"
 									required
 									prepend-icon="mdi-map-marker"
 								></v-text-field>
@@ -39,10 +37,9 @@
 								<v-text-field
 									ref="imageURL"
 									v-model="imageURL"
-									:rules="[() => !!imageURL || 'This is a required field.']"
+									:rules="requiredFieldRule"
 									:error-messages="errorMessages"
 									label="Meetup Image URL"
-									placeholder="Meetup image URL"
 									required
 									prepend-icon="mdi-web"
 								></v-text-field>
@@ -58,12 +55,11 @@
 								<v-textarea
 									ref="description"
 									v-model="description"
-									:rules="[() => !!imageURL || 'This is a required field.']"
+									:rules="requiredFieldRule"
 									:error-messages="errorMessages"
 									label="Meetup Description"
 									counter
 									maxlength="300"
-									placeholder="Meetup description"
 									required
 									prepend-icon="mdi-comment"
 								></v-textarea>
@@ -83,11 +79,8 @@
 										<v-text-field
 											ref="date"
 											v-model="date"
-											:rules="[() => !!date || 'This is a required field.']"
-											:error-messages="errorMessages"
 											label="Meetup Date"
 											prepend-icon="mdi-calendar"
-											required
 											readonly
 											v-bind="attrs"
 											v-on="on"
@@ -114,11 +107,8 @@
 										<v-text-field
 											ref="time"
 											v-model="time"
-											:rules="[() => !!time || 'This is a required field.']"
-											:error-messages="errorMessages"
 											label="Meetup Time"
 											prepend-icon="mdi-clock"
-											required
 											readonly
 											v-bind="attrs"
 											v-on="on"
@@ -134,12 +124,12 @@
 								</v-menu>
 							</v-col>
 						</v-row>
-
 						<v-divider class="mt-8"></v-divider>
 						<v-card-actions>
-							<v-btn color="accent" depressed @click="submit">Organize Meetup</v-btn>
+							<v-btn color="secondary" depressed @click="cancel">Cancel</v-btn>
+							<v-spacer></v-spacer>
 							<v-slide-x-reverse-transition>
-								<v-tooltip right v-if="formHasErrors">
+								<v-tooltip left v-if="formHasErrors">
 									<template v-slot:activator="{ on, attrs }">
 										<v-btn class="my-0" icon v-bind="attrs" @click="resetForm" v-on="on">
 											<v-icon>mdi-refresh</v-icon>
@@ -148,6 +138,7 @@
 									<span>Refresh Form</span>
 								</v-tooltip>
 							</v-slide-x-reverse-transition>
+							<v-btn color="accent" depressed @click="submit">Organize Meetup</v-btn>
 						</v-card-actions>
 					</v-card-text>
 				</v-card>
@@ -171,9 +162,10 @@ export default {
 			date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
 				.toISOString()
 				.substr(0, 10),
-			time: null,
+			time: '14:30',
 			dateMenu: false,
 			timeMenu: false,
+			requiredFieldRule: [(v) => !!v || 'This is a required field.'],
 		};
 	},
 
@@ -187,6 +179,11 @@ export default {
 			});
 		},
 
+		cancel() {
+			this.resetForm();
+			this.$router.push('/meetups');
+		},
+
 		submit() {
 			this.formHasErrors = false;
 
@@ -196,16 +193,18 @@ export default {
 				this.$refs[f].validate(true);
 			});
 
-			const meetupData = {
-				title: this.title,
-				location: this.location,
-				imageURL: this.imageURL,
-				description: this.description,
-				date: this.formattedDateAndTime,
-			};
+			if (!this.formHasErrors) {
+				const meetupData = {
+					title: this.title,
+					location: this.location,
+					imageURL: this.imageURL,
+					description: this.description,
+					date: this.formattedDateAndTime,
+				};
 
-			this.$store.dispatch('organizeMeetup', meetupData);
-			this.$router.push('/meetups');
+				this.$store.dispatch('organizeMeetup', meetupData);
+				this.$router.push('/meetups');
+			}
 		},
 	},
 
