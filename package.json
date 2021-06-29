@@ -1,6 +1,6 @@
 {
 	"name": "tukutane",
-	"version": "0.1.12",
+	"version": "0.1.15",
 	"private": true,
 	"scripts": {
 		"serve": "vue-cli-service serve",

@@ -9,19 +9,6 @@
 						<v-row>
 							<v-col>
 								<v-text-field
-									ref="username"
-									v-model="username"
-									:rules="usernameRules"
-									:error-messages="errorMessages"
-									label="Display Name"
-									required
-									prepend-icon="mdi-account"
-								></v-text-field>
-							</v-col>
-						</v-row>
-						<v-row>
-							<v-col>
-								<v-text-field
 									ref="email"
 									v-model="email"
 									:rules="emailRules"
@@ -76,11 +63,6 @@ export default {
 		return {
 			errorMessages: '',
 			formHasErrors: false,
-			username: null,
-			usernameRules: [
-				(v) => !!v || 'This is a required field.',
-				(v) => (v && v.length >= 3) || 'Minimum length is 3 characters.',
-			],
 			email: null,
 			emailRules: [
 				(v) => !!v || 'This is a required field.',
@@ -114,7 +96,10 @@ export default {
 			});
 
 			if (!this.formHasErrors) {
-				console.log(this.username, this.email, this.password);
+				this.$store.dispatch('userSignUp', {
+					email: this.email,
+					password: this.password,
+				});
 			}
 		},
 	},
@@ -122,16 +107,25 @@ export default {
 	computed: {
 		form() {
 			return {
-				username: this.username,
 				email: this.email,
 				password: this.password,
 			};
+		},
+
+		user() {
+			return this.$store.getters.user;
 		},
 	},
 
 	watch: {
 		name() {
 			this.errorMessages = '';
+		},
+
+		user(value) {
+			if (value !== null && value !== undefined) {
+				this.$router.push('/');
+			}
 		},
 	},
 };

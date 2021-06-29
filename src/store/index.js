@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import { auth } from '@/firebase/config';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -76,15 +78,20 @@ export default new Vuex.Store({
 			},
 		],
 
-		user: {
-			id: 'yQ55bb5shwBN1rrTSiFg',
-			registeredMeetups: ['s1eJZ6ArFB7ybziWVce9', 'ErznXBkTXbw5qPXN25gb'],
-		},
+		user: null,
 	},
 
 	mutations: {
 		organizeMeetup(state, payload) {
 			state.meetups.push(payload);
+		},
+
+		userSignUp(state, payload) {
+			state.user = payload;
+		},
+
+		userSignIn(state, payload) {
+			state.user = payload;
 		},
 	},
 
@@ -102,6 +109,36 @@ export default new Vuex.Store({
 			/** reach out to firebase and persist the data */
 
 			commit('organizeMeetup', meetup);
+		},
+
+		userSignUp({ commit }, payload) {
+			auth
+				.createUserWithEmailAndPassword(payload.email, payload.password)
+				.then((user) => {
+					const signedUpUser = {
+						id: user.uid,
+						registeredMeetups: [],
+					};
+					commit('userSignUp', signedUpUser);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+
+		userSignIn({ commit }, payload) {
+			auth
+				.signInWithEmailAndPassword(payload.email, payload.password)
+				.then((user) => {
+					const signedInUser = {
+						id: user.uid,
+						registeredMeetups: [],
+					};
+					commit('userSignIn', signedInUser);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
 		},
 	},
 
@@ -122,6 +159,10 @@ export default new Vuex.Store({
 
 		featuredMeetups(state, getters) {
 			return getters.allMeetups.slice(0, 5);
+		},
+
+		user(state) {
+			return state.user;
 		},
 	},
 });
