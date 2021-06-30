@@ -12,6 +12,18 @@
 		</v-row>
 		<v-row align="center" justify="space-around">
 			<v-col class="text-center">
+				<v-progress-circular
+					:size="89"
+					:width="5"
+					indeterminate
+					color="info"
+					v-if="loading"
+				>
+				</v-progress-circular>
+			</v-col>
+		</v-row>
+		<v-row align="center" justify="space-around" v-if="!loading">
+			<v-col class="text-center">
 				<v-carousel cycle hide-delimiters style="cursor:pointer;">
 					<v-carousel-item
 						v-for="meetup in meetups"
@@ -51,6 +63,14 @@ export default {
 		meetups() {
 			return this.$store.getters.featuredMeetups;
 		},
+
+		loading() {
+			return this.$store.getters.loading;
+		},
+	},
+
+	mounted() {
+		this.$store.dispatch('fetchMeetups');
 	},
 };
 </script>
@@ -65,5 +85,9 @@ export default {
 	color: #ffffff;
 	font-size: 32px;
 	padding: 20px;
+}
+
+.v-progress-circular {
+	margin: 1rem;
 }
 </style>
