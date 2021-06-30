@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import store from '@/store';
+
 import Home from '@/views/Home';
 import MeetupsExplore from '@/views/meetups/MeetupsExplore';
 import MeetupsOrganize from '@/views/meetups/MeetupsOrganize';
@@ -32,6 +34,13 @@ const routes = [
 		path: '/meetups/organize-meetup',
 		name: 'MeetupsOrganize',
 		component: MeetupsOrganize,
+		beforeEnter: (to, from, next) => {
+			if (store.getters.user) {
+				next();
+			} else {
+				next('/sign-in');
+			}
+		},
 		meta: {
 			title: 'Organize a Meetup',
 		},
@@ -49,6 +58,13 @@ const routes = [
 		path: '/profile',
 		name: 'UserProfile',
 		component: UserProfile,
+		beforeEnter: (to, from, next) => {
+			if (store.getters.user) {
+				next();
+			} else {
+				next('/sign-in');
+			}
+		},
 		meta: {
 			title: 'User Profile',
 		},

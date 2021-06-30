@@ -15,7 +15,11 @@ Vue.component('Alert', Alert);
 
 let app;
 
-auth.onAuthStateChanged(() => {
+auth.onAuthStateChanged((user) => {
+	if (user) {
+		store.dispatch('userAutoSignIn', user);
+	}
+
 	if (!app) {
 		new Vue({
 			router,

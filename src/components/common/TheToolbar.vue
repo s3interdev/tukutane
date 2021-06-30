@@ -14,6 +14,12 @@
 						</v-list-item-icon>
 						<v-list-item-title>{{ menuItem.text }}</v-list-item-title>
 					</v-list-item>
+					<v-list-item @click="onSignOut" v-if="userIsAuthenticated">
+						<v-list-item-icon>
+							<v-icon>mdi-exit-to-app</v-icon>
+						</v-list-item-icon>
+						<v-list-item-title>Sign Out</v-list-item-title>
+					</v-list-item>
 				</v-list-item-group>
 			</v-list>
 		</v-navigation-drawer>
@@ -39,6 +45,10 @@
 					<v-icon left dark>{{ menuItem.icon }}</v-icon>
 					{{ menuItem.text }}
 				</v-btn>
+				<v-btn color="primary" depressed @click="onSignOut" v-if="userIsAuthenticated">
+					<v-icon left dark>mdi-exit-to-app</v-icon>
+					Sign Out
+				</v-btn>
 			</v-toolbar-items>
 		</v-app-bar>
 	</div>
@@ -53,6 +63,13 @@ export default {
 			drawer: false,
 			selectedMenuItem: 0,
 		};
+	},
+
+	methods: {
+		onSignOut() {
+			this.$store.dispatch('userSignOut');
+			this.$router.push('/');
+		},
 	},
 
 	computed: {
