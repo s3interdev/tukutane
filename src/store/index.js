@@ -77,8 +77,9 @@ export default new Vuex.Store({
 					"But with the blast shield down, I can't even see! How am I supposed to fight? What good is a reward if you ain't around to use it? Besides, attacking that battle station ain't my idea of courage. It's more like…suicide.",
 			},
 		],
-
 		user: null,
+		loading: false,
+		error: null,
 	},
 
 	mutations: {
@@ -92,6 +93,18 @@ export default new Vuex.Store({
 
 		userSignIn(state, payload) {
 			state.user = payload;
+		},
+
+		setLoading(state, payload) {
+			state.loading = payload;
+		},
+
+		setError(state, payload) {
+			state.error = payload;
+		},
+
+		clearError(state) {
+			state.error = null;
 		},
 	},
 
@@ -112,33 +125,53 @@ export default new Vuex.Store({
 		},
 
 		userSignUp({ commit }, payload) {
+			commit('setLoading', true);
+			commit('clearError');
+
 			auth
 				.createUserWithEmailAndPassword(payload.email, payload.password)
 				.then((user) => {
+					commit('setLoading', false);
+
 					const signedUpUser = {
 						id: user.uid,
 						registeredMeetups: [],
 					};
+
 					commit('userSignUp', signedUpUser);
 				})
 				.catch((error) => {
+					commit('setLoading', false);
+					commit('setError', error);
 					console.log(error);
 				});
 		},
 
 		userSignIn({ commit }, payload) {
+			commit('setLoading', true);
+			commit('clearError');
+
 			auth
 				.signInWithEmailAndPassword(payload.email, payload.password)
 				.then((user) => {
+					commit('setLoading', false);
+
 					const signedInUser = {
 						id: user.uid,
 						registeredMeetups: [],
 					};
+
 					commit('userSignIn', signedInUser);
 				})
 				.catch((error) => {
+					commit('setLoading', false);
+					commit('setError', error);
 					console.log(error);
 				});
+		},
+
+		clearError({ commit }) {
+			commit('clearError');
 		},
 	},
 
@@ -163,6 +196,14 @@ export default new Vuex.Store({
 
 		user(state) {
 			return state.user;
+		},
+
+		loading(state) {
+			return state.loading;
+		},
+
+		error(state) {
+			return state.error;
 		},
 	},
 });
