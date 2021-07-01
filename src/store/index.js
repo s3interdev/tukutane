@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { auth, rtDb } from '@/firebase/config';
+import { auth, rtDb, cdStorage } from '@/firebase/config';
 
 Vue.use(Vuex);
 
@@ -79,20 +79,41 @@ export default new Vuex.Store({
 			const meetup = {
 				title: payload.title,
 				location: payload.location,
-				imageURL: payload.imageURL,
 				description: payload.description,
 				date: payload.date.toISOString(),
 				creatorId: getters.user.id,
 			};
 
 			/** reach out to firebase and persist the data */
+			let imageURL;
+			let key;
+
 			rtDb
 				.ref('meetups')
 				.push(meetup)
 				.then((data) => {
-					const key = data.key;
+					key = data.key;
+					return key;
+				})
+				.then((key) => {
+					const file = payload.meetupImage.name;
+					const extension = file.slice(file.lastIndexOf('.'));
+					const filePath = `meetups/${key}${extension}`;
+					const storageRef = cdStorage.ref(filePath);
+					const res = storageRef.put(payload.meetupImage);
 
-					commit('organizeMeetup', { ...meetup, id: key });
+					return res;
+				})
+				.then((res) => {
+					return res.ref.getDownloadURL().then((imageURL) => {
+						return rtDb
+							.ref('meetups')
+							.child(key)
+							.update({ imageURL: imageURL });
+					});
+				})
+				.then(() => {
+					commit('organizeMeetup', { ...meetup, imageURL: imageURL, id: key });
 				})
 				.catch((error) => {
 					console.log(error);

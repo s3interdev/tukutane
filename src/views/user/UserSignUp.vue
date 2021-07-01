@@ -2,7 +2,7 @@
 	<v-container>
 		<v-row justify="center" v-if="error">
 			<v-col cols="12" sm="10" md="8" lg="6">
-				<Alert @closing="onClose" :text="error.message" />
+				<TheAlert @closing="onClose" :text="error.message" />
 			</v-col>
 		</v-row>
 		<v-row justify="center">
