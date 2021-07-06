@@ -8,7 +8,9 @@
 		<v-row justify="center">
 			<v-col cols="12" sm="10" md="8" lg="6">
 				<v-card ref="form">
-					<v-card-subtitle>SIGN IN</v-card-subtitle>
+					<v-card-title>
+						<span class="text-h5">SIGN IN</span>
+					</v-card-title>
 					<v-divider class="mb-3"></v-divider>
 					<v-card-text>
 						<v-row>

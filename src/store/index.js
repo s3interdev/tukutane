@@ -22,6 +22,24 @@ export default new Vuex.Store({
 			state.meetups.push(payload);
 		},
 
+		updateMeetup(state, payload) {
+			const meetup = state.meetups.find((meetup) => {
+				return meetup.id === payload.id;
+			});
+
+			if (payload.title) {
+				meetup.title = payload.title;
+			}
+
+			if (payload.description) {
+				meetup.description = payload.description;
+			}
+
+			if (payload.date) {
+				meetup.date = payload.date;
+			}
+		},
+
 		userSignUp(state, payload) {
 			state.user = payload;
 		},
@@ -84,7 +102,6 @@ export default new Vuex.Store({
 				creatorId: getters.user.id,
 			};
 
-			/** reach out to firebase and persist the data */
 			let imageURL;
 			let key;
 
@@ -117,6 +134,37 @@ export default new Vuex.Store({
 				})
 				.catch((error) => {
 					console.log(error);
+				});
+		},
+
+		updateMeetup({ commit }, payload) {
+			commit('setLoading', true);
+
+			const updateObject = {};
+
+			if (payload.title) {
+				updateObject.title = payload.title;
+			}
+
+			if (payload.description) {
+				updateObject.description = payload.description;
+			}
+
+			if (payload.date) {
+				updateObject.date = payload.date;
+			}
+
+			rtDb
+				.ref('meetups')
+				.child(payload.id)
+				.update(updateObject)
+				.then(() => {
+					commit('setLoading', false);
+					commit('updateMeetup', payload);
+				})
+				.catch((error) => {
+					console.log(error);
+					commit('setLoading', false);
 				});
 		},
 

@@ -1,5 +1,17 @@
 <template>
 	<v-container>
+		<v-row align="center" justify="space-around">
+			<v-col class="text-center">
+				<v-progress-circular
+					:size="89"
+					:width="5"
+					indeterminate
+					color="info"
+					v-if="loading"
+				>
+				</v-progress-circular>
+			</v-col>
+		</v-row>
 		<v-row justify="center">
 			<v-col cols="12" sm="10" md="8" lg="6" v-for="meetup in meetups" :key="meetup.id">
 				<v-card>
@@ -32,6 +44,10 @@ export default {
 	computed: {
 		meetups() {
 			return this.$store.getters.allMeetups;
+		},
+
+		loading() {
+			return this.$store.getters.loading;
 		},
 	},
 };
