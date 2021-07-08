@@ -3,11 +3,9 @@
 		<v-dialog persistent max-width="600px" v-model="dialog">
 			<template v-slot:activator="{ on, attrs }">
 				<v-btn color="error" dark v-bind="attrs" v-on="on">
-					<v-icon left dark>mdi-pencil</v-icon>
 					EDIT MEETUP
 				</v-btn>
 			</template>
-
 			<v-card ref="form">
 				<v-card-title>
 					<span class="text-h5">EDIT MEETUP</span>

@@ -18,6 +18,12 @@
 					<v-img class="white--text align-end" height="400px" :src="meetup.imageURL">
 						<v-card-title>{{ meetup.title }}</v-card-title>
 						<v-card-subtitle>{{ meetup.date | date }}</v-card-subtitle>
+						<div class="d-flex justify-start ml-3 mb-3" v-if="userIsCreator">
+							<v-btn class="error">Edit Date</v-btn>
+						</div>
+						<div class="d-flex justify-start ml-3 mb-3" v-if="userIsCreator">
+							<v-btn class="error">Edit Time</v-btn>
+						</div>
 					</v-img>
 
 					<v-card-text class="text--primary">
